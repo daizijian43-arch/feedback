@@ -1,1 +1,512 @@
-Hola y adios
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Hotel Bliss · satisfaction survey</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5efe6 0%, #e7dccc 100%);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      margin: 0;
+    }
+
+    .survey-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: #ffffff;
+      border-radius: 2.5rem;
+      box-shadow: 0 30px 55px rgba(0, 0, 0, 0.12), 0 10px 25px rgba(0, 0, 0, 0.05);
+      width: 100%;
+      max-width: 650px;
+      padding: 2.5rem 2.2rem;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(180, 150, 120, 0.2);
+    }
+
+    .hotel-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.8rem;
+      border-bottom: 1px solid #e5dbcf;
+      padding-bottom: 1.2rem;
+    }
+
+    .hotel-icon {
+      font-size: 2.4rem;
+      line-height: 1;
+    }
+
+    .hotel-name {
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      color: #3e362e;
+    }
+
+    .subhead {
+      font-size: 0.95rem;
+      color: #7b6e5e;
+      margin-left: 0.2rem;
+      font-weight: 400;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #2f2a24;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .question-block {
+      margin-bottom: 2rem;
+    }
+
+    .question-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 500;
+      color: #3e3a35;
+      margin-bottom: 0.6rem;
+      font-size: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .stars {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      gap: 0.3rem;
+    }
+
+    .stars input {
+      display: none;
+    }
+
+    .stars label {
+      font-size: 2.2rem;
+      color: #d4c5b2;
+      cursor: pointer;
+      transition: color 0.2s ease, transform 0.2s ease;
+      user-select: none;
+    }
+
+    .stars label:hover,
+    .stars label:hover ~ label {
+      color: #e5b21c;
+      transform: scale(1.08);
+    }
+
+    .stars input:checked ~ label {
+      color: #f3b81a;
+    }
+
+    .stars input:checked + label {
+      color: #f3a81c;
+    }
+
+    .rating-text {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #7b6a56;
+      background: #f7f3ed;
+      padding: 0.2rem 0.9rem;
+      border-radius: 2rem;
+      margin-left: 0.5rem;
+    }
+
+    .comment-area {
+      width: 100%;
+      border: 1px solid #ddd2c2;
+      border-radius: 1.5rem;
+      padding: 1rem 1.2rem;
+      font-size: 0.95rem;
+      font-family: inherit;
+      resize: vertical;
+      background: #fefcf9;
+      transition: border 0.2s, box-shadow 0.2s;
+      margin-top: 0.3rem;
+      color: #2f2a24;
+    }
+
+    .comment-area:focus {
+      outline: none;
+      border-color: #c4a77d;
+      box-shadow: 0 0 0 3px rgba(200, 160, 100, 0.2);
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 0.4rem;
+    }
+
+    .checkbox-option {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #f9f6f0;
+      padding: 0.55rem 1.1rem;
+      border-radius: 2.5rem;
+      border: 1px solid #e2d6c4;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      color: #4b3f32;
+    }
+
+    .checkbox-option input {
+      accent-color: #b48b4e;
+      width: 1rem;
+      height: 1rem;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .checkbox-option:hover {
+      background: #f0e7da;
+      border-color: #c4a77d;
+    }
+
+    .submit-btn {
+      background: #2f2a24;
+      color: white;
+      border: none;
+      border-radius: 3rem;
+      padding: 1rem 2rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      letter-spacing: 0.3px;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.1s;
+      margin-top: 1.2rem;
+      background: linear-gradient(135deg, #3e362e, #2c241b);
+      box-shadow: 0 12px 20px -12px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .submit-btn:hover {
+      background: #4e4236;
+      transform: scale(1.01);
+    }
+
+    .submit-btn:active {
+      transform: scale(0.98);
+    }
+
+    .thankyou-message {
+      text-align: center;
+      padding: 1.8rem 0.5rem;
+      animation: fadeSlide 0.5s ease;
+    }
+
+    .thankyou-message h3 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      color: #3e362e;
+    }
+
+    .summary-box {
+      background: #f7f2ea;
+      border-radius: 1.5rem;
+      padding: 1.2rem 1.5rem;
+      margin: 1.5rem 0 0.5rem;
+      text-align: left;
+      font-size: 0.95rem;
+      color: #3e362e;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.4rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @keyframes fadeSlide {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      .survey-card {
+        padding: 1.8rem 1.5rem;
+      }
+      .stars label {
+        font-size: 1.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="survey-card" id="surveyCard">
+    <!-- header -->
+    <div class="hotel-header">
+      <span class="hotel-icon">🏨</span>
+      <span class="hotel-name">Hotel Serenity</span>
+      <span class="subhead">· guest survey</span>
+    </div>
+
+    <!-- Form visible by default -->
+    <form id="surveyForm">
+      <h2>✨ How was your stay?</h2>
+
+      <!-- Cleanliness rating -->
+      <div class="question-block">
+        <div class="question-label">
+          <span>🧹 Cleanliness</span>
+          <span class="rating-text" id="cleanlinessText">select</span>
+        </div>
+        <div class="stars" id="cleanlinessStars">
+          <input type="radio" id="clean5" name="cleanliness" value="5">
+          <label for="clean5" title="5 stars">★</label>
+          <input type="radio" id="clean4" name="cleanliness" value="4">
+          <label for="clean4" title="4 stars">★</label>
+          <input type="radio" id="clean3" name="cleanliness" value="3">
+          <label for="clean3" title="3 stars">★</label>
+          <input type="radio" id="clean2" name="cleanliness" value="2">
+          <label for="clean2" title="2 stars">★</label>
+          <input type="radio" id="clean1" name="cleanliness" value="1">
+          <label for="clean1" title="1 star">★</label>
+        </div>
+      </div>
+
+      <!-- Service rating -->
+      <div class="question-block">
+        <div class="question-label">
+          <span>🤝 Service</span>
+          <span class="rating-text" id="serviceText">select</span>
+        </div>
+        <div class="stars" id="serviceStars">
+          <input type="radio" id="serv5" name="service" value="5">
+          <label for="serv5" title="5 stars">★</label>
+          <input type="radio" id="serv4" name="service" value="4">
+          <label for="serv4" title="4 stars">★</label>
+          <input type="radio" id="serv3" name="service" value="3">
+          <label for="serv3" title="3 stars">★</label>
+          <input type="radio" id="serv2" name="service" value="2">
+          <label for="serv2" title="2 stars">★</label>
+          <input type="radio" id="serv1" name="service" value="1">
+          <label for="serv1" title="1 star">★</label>
+        </div>
+      </div>
+
+      <!-- Comfort rating -->
+      <div class="question-block">
+        <div class="question-label">
+          <span>🛏️ Comfort</span>
+          <span class="rating-text" id="comfortText">select</span>
+        </div>
+        <div class="stars" id="comfortStars">
+          <input type="radio" id="comf5" name="comfort" value="5">
+          <label for="comf5" title="5 stars">★</label>
+          <input type="radio" id="comf4" name="comfort" value="4">
+          <label for="comf4" title="4 stars">★</label>
+          <input type="radio" id="comf3" name="comfort" value="3">
+          <label for="comf3" title="3 stars">★</label>
+          <input type="radio" id="comf2" name="comfort" value="2">
+          <label for="comf2" title="2 stars">★</label>
+          <input type="radio" id="comf1" name="comfort" value="1">
+          <label for="comf1" title="1 star">★</label>
+        </div>
+      </div>
+
+      <!-- Additional feedback -->
+      <div class="question-block">
+        <label class="question-label" style="margin-bottom:0.2rem;">📝 Additional comments</label>
+        <textarea class="comment-area" id="comments" rows="3" placeholder="Tell us about your experience..."></textarea>
+      </div>
+
+      <!-- Would you recommend? -->
+      <div class="question-block">
+        <div class="question-label">🌸 Would you recommend us?</div>
+        <div class="checkbox-group" id="recommendGroup">
+          <label class="checkbox-option">
+            <input type="radio" name="recommend" value="yes"> 👍 Yes, definitely
+          </label>
+          <label class="checkbox-option">
+            <input type="radio" name="recommend" value="maybe"> 🤔 Maybe
+          </label>
+          <label class="checkbox-option">
+            <input type="radio" name="recommend" value="no"> 👎 No
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">📋 Submit survey</button>
+    </form>
+
+    <!-- Thank you / summary section (hidden initially) -->
+    <div id="thankyouSection" class="thankyou-message hidden">
+      <h3>🌟 Thank you!</h3>
+      <p style="color:#5e5242; margin-bottom:0.5rem;">Your feedback helps us improve.</p>
+      <div class="summary-box" id="summaryContent"></div>
+      <button id="newSurveyBtn" class="submit-btn" style="margin-top:1.2rem; background:#806b56;">🔄 Start new survey</button>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      'use strict';
+
+      // ----- DOM elements -----
+      const form = document.getElementById('surveyForm');
+      const thankyouSection = document.getElementById('thankyouSection');
+      const summaryContent = document.getElementById('summaryContent');
+      const newSurveyBtn = document.getElementById('newSurveyBtn');
+
+      // Rating text spans
+      const cleanlinessText = document.getElementById('cleanlinessText');
+      const serviceText = document.getElementById('serviceText');
+      const comfortText = document.getElementById('comfortText');
+
+      // Rating groups (for easy reset)
+      const cleanlinessRadios = document.getElementsByName('cleanliness');
+      const serviceRadios = document.getElementsByName('service');
+      const comfortRadios = document.getElementsByName('comfort');
+      const recommendRadios = document.getElementsByName('recommend');
+      const commentsField = document.getElementById('comments');
+
+      // Helper: update rating text based on selected value
+      function updateRatingText(groupName, textElement) {
+        const selected = document.querySelector(`input[name="${groupName}"]:checked`);
+        if (selected) {
+          const val = selected.value;
+          const labels = {1:'Poor',2:'Fair',3:'Good',4:'Very good',5:'Excellent'};
+          textElement.textContent = labels[val] || val;
+        } else {
+          textElement.textContent = 'select';
+        }
+      }
+
+      // Attach event listeners to all star radio buttons
+      function bindStarListeners() {
+        // Cleanliness
+        cleanlinessRadios.forEach(radio => {
+          radio.addEventListener('change', () => updateRatingText('cleanliness', cleanlinessText));
+        });
+        // Service
+        serviceRadios.forEach(radio => {
+          radio.addEventListener('change', () => updateRatingText('service', serviceText));
+        });
+        // Comfort
+        comfortRadios.forEach(radio => {
+          radio.addEventListener('change', () => updateRatingText('comfort', comfortText));
+        });
+      }
+
+      // Initial binding
+      bindStarListeners();
+
+      // Also update on page load in case of browser remember (unlikely, but safe)
+      updateRatingText('cleanliness', cleanlinessText);
+      updateRatingText('service', serviceText);
+      updateRatingText('comfort', comfortText);
+
+      // ----- Form submission -----
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Gather values
+        const cleanlinessVal = document.querySelector('input[name="cleanliness"]:checked')?.value || 'not rated';
+        const serviceVal = document.querySelector('input[name="service"]:checked')?.value || 'not rated';
+        const comfortVal = document.querySelector('input[name="comfort"]:checked')?.value || 'not rated';
+        const recommendVal = document.querySelector('input[name="recommend"]:checked')?.value || 'not specified';
+        const comments = commentsField.value.trim() || 'No comments';
+
+        // Friendly labels for recommendation
+        const recommendDisplay = {
+          yes: '👍 Yes, definitely',
+          maybe: '🤔 Maybe',
+          no: '👎 No'
+        }[recommendVal] || recommendVal;
+
+        // Build summary HTML
+        const summaryHtml = `
+          <div class="summary-line"><span>🧹 Cleanliness:</span> <strong>${cleanlinessVal}/5</strong></div>
+          <div class="summary-line"><span>🤝 Service:</span> <strong>${serviceVal}/5</strong></div>
+          <div class="summary-line"><span>🛏️ Comfort:</span> <strong>${comfortVal}/5</strong></div>
+          <div class="summary-line"><span>🌸 Recommend:</span> <strong>${recommendDisplay}</strong></div>
+          <div style="margin-top:0.8rem; font-style:italic; color:#5b4f3e;">📝 “${escapeHtml(comments)}”</div>
+        `;
+
+        summaryContent.innerHTML = summaryHtml;
+
+        // Hide form, show thank you section
+        form.classList.add('hidden');
+        thankyouSection.classList.remove('hidden');
+      });
+
+      // Simple escape to avoid XSS in comments (though it's plain text)
+      function escapeHtml(text) {
+        const map = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        };
+        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+      }
+
+      // ----- New survey / reset -----
+      function resetSurvey() {
+        // Clear all radio buttons
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+          radio.checked = false;
+        });
+
+        // Clear textarea
+        if (commentsField) commentsField.value = '';
+
+        // Reset rating texts
+        cleanlinessText.textContent = 'select';
+        serviceText.textContent = 'select';
+        comfortText.textContent = 'select';
+
+        // Show form, hide thank you
+        form.classList.remove('hidden');
+        thankyouSection.classList.add('hidden');
+
+        // Re-sync rating texts (in case any stale state)
+        updateRatingText('cleanliness', cleanlinessText);
+        updateRatingText('service', serviceText);
+        updateRatingText('comfort', comfortText);
+      }
+
+      newSurveyBtn.addEventListener('click', resetSurvey);
+
+      // Optional: Handle manual uncheck? The radio groups work naturally.
+      // Additional feature: if user clicks on already selected star label, nothing changes (radio behaviour).
+      // That's fine.
+
+      // Ensure that the form remains accessible.
+    })();
+  </script>
+</body>
+</html>
